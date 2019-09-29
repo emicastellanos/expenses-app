@@ -14,16 +14,12 @@ body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.App {
-  /* margin: ; */
-}
-
-.container-table { /* centrado y con tamaño fijo */
+.app { /* centrado y con tamaño fijo */
   display: flex;
   flex-direction: column;
   justify-content: center;
   border: 1px solid violet;
-  height: 600px;
+  height: 100%;
   margin: 0 auto;
 }
 
@@ -70,4 +66,13 @@ td {
 table, tr, th, td {
   border: 1px solid black;
   border-collapse: collapse;
+}
+
+.container-form {
+  padding: 10px;
+  border: 1px solid black;
+  margin: 10px;
+  width: 90%;
+  justify-content: center;
+  margin: 1px auto;
 }
