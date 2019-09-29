@@ -48,6 +48,7 @@ class FormItem extends Component {
             <Form.Control
             type="text" name="description"
             size="sm" onChange={this.handleChange}
+            value={this.state.description}
             required
             />
           </Col>
@@ -58,6 +59,7 @@ class FormItem extends Component {
             <Form.Control 
             type="number" name="amount"
             size="sm" onChange={this.handleChange}
+            value={this.state.amount}
             required
             />
           </Col>
