@@ -1,3 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.15;
+  font-size:16px;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 .App {
-  margin: 16px;
+  /* margin: ; */
+}
+
+.container-table { /* centrado y con tamaño fijo */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid violet;
+  height: 600px;
+  margin: 0 auto;
+}
+
+.wrapper-table {
+  justify-content: center;
+  border: 1px solid black;
+  height: 560px;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.header-class {
+  background-color: rgb(246, 197, 251);
+}
+
+.container-summary {
+  text-align: center;
+}
+
+/*Set a min width where your table start to look like crap*/
+table { min-width: 600px; }
+
+/*The next 3 sections make the magic happen*/
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tbody {
+  display: block;
+  height: 500px;
+  max-height: 500px;
+  overflow-x: hidden;
+  overflow-y: overlay;
+}
+
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*Use the following to make sure cols align correctly*/
+table, tr, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
