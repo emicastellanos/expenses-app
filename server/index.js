@@ -4,6 +4,7 @@ const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 const Database = require('./database');
+const bodyParser = require ('body-parser');
 const Api = require('./api');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -28,13 +29,15 @@ if (!isDev && cluster.isMaster) {
 
   // Database calls
   const database = new Database();
-  database.run();
 
   // Priority serve any static files.
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: true }));
+  
   app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
   // Answer API requests.
-  const api = new Api(app);
+  new Api(app, database);
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
