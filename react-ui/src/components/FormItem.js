@@ -34,7 +34,7 @@ class FormItem extends Component {
     this.props.onSubmit(this.state.description, this.state.amount)
     this.setState({
       description:'',
-      amount:''
+      amount:0,
     })
   }
 
@@ -49,27 +49,28 @@ class FormItem extends Component {
             type="text" name="description"
             size="sm" onChange={this.handleChange}
             value={this.state.description}
-            required
+            //required
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} controlId="amountGroup">
-          <Form.Label column sm="2">Monto</Form.Label>
-          <Col sm="10">
-            <Form.Control 
-            type="number" name="amount"
-            size="sm" onChange={this.handleChange}
-            value={this.state.amount}
-            required
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} controlId="dateGroup">
-          <Form.Label column sm="2">Fecha</Form.Label>
-          <Col sm="10">
-            <Form.Control type="text" name="date" size="sm"></Form.Control>
-          </Col>
-        </Form.Group>
+        <Form.Row>
+          <Form.Group as={Row} controlId="amountGroup">
+            <Form.Label column sm="2">Monto</Form.Label>
+            <Col sm="10">
+              <Form.Control 
+              type="number" name="amount"
+              size="sm" onChange={this.handleChange}
+              value={this.state.amount}
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="dateGroup">
+            <Form.Label column sm="2">Fecha</Form.Label>
+            <Col sm="10">
+              <Form.Control type="text" name="date" size="sm"></Form.Control>
+            </Col>
+          </Form.Group>
+        </Form.Row>
         
         <Button className="btn" type="submit"
           variant="primary" size="lg" block>

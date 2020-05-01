@@ -6,13 +6,23 @@ class Api {
     });
 
     app.post('/api/insert', (req,res) => {
-      const name = req.body.description;
+      console.log('entra /api/insert')
       db.insert(req.body)
-      res.json({
-        greeting: `hola ${name}`
-      });
-      
+      res.json('OK')
     })
+
+    app.get('/api/getAllMovements', (req, res) => {
+      console.log('entra /api/getAllMovements')
+      db.selectAll()
+      .then((data)=>{
+        console.log('data', data)
+        res.json({
+          movs: data
+        })
+      })
+      console.log('sale /api/getAllMovements')
+    })
+
 
   }
   

@@ -3,6 +3,14 @@
   padding: 0;
 }
 
+html, body {
+  position:fixed ;
+  top: 0;
+  bottom:0;
+  left:0;
+  right:0;
+}
+
 html {
   line-height: 1.15;
   font-size:16px;
@@ -18,21 +26,19 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   border: 1px solid violet;
   height: 100%;
   margin: 0 auto;
 }
 
 .wrapper-table {
-  justify-content: center;
-  border: 1px solid black;
-  height: 560px;
   margin: 0 auto;
-  width: 90%;
+  width: 95%;
 }
 
 .header-class {
-  background-color: rgb(246, 197, 251);
+  background-color: rgba(246, 197, 251, 0.582);
 }
 
 .container-summary {
@@ -40,7 +46,7 @@ body {
 }
 
 /*Set a min width where your table start to look like crap*/
-table { min-width: 600px; }
+table { min-width: 400px; }
 
 /*The next 3 sections make the magic happen*/
 thead, tbody tr {
@@ -51,8 +57,8 @@ thead, tbody tr {
 
 tbody {
   display: block;
-  height: 500px;
-  max-height: 500px;
+  height: 350px;
+  max-height: 350px;
   overflow-x: hidden;
   overflow-y: overlay;
 }
@@ -63,7 +69,7 @@ td {
 }
 
 /*Use the following to make sure cols align correctly*/
-table, tr, th, td {
+tr, th, td {
   border: 1px solid black;
   border-collapse: collapse;
 }
@@ -71,8 +77,6 @@ table, tr, th, td {
 .container-form {
   padding: 10px;
   border: 1px solid black;
-  margin: 10px;
-  width: 90%;
-  justify-content: center;
+  width: 100%;
   margin: 1px auto;
 }

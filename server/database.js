@@ -19,11 +19,23 @@ class Database {
 
   insert({description, amount, date}) {
     console.log('mono: ',description, amount, date)
-    this.db.run("INSERT INTO gasto(description, amount, date) VALUES (?,?,?)",  [description, amount, date]);
+    this.db.run("INSERT INTO movements(description, amount, date) VALUES (?,?,?)",  [description, amount, date]);
   }
 
+  selectAll() {
+    return new Promise( (resolve,reject) => {
+      const sql = "SELECT id, description, amount, date FROM movements";
+      let result = [];
+      this.db.all(sql,[], (err, rows) => {
+        if (err) {
+          reject(err) ;
+        }
+        console.log('rows: ',rows)
+        resolve(rows)
+      })
+    })
+  }
   
-
 }
 
 module.exports = Database;
