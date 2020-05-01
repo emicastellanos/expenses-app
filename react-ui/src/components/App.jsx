@@ -28,7 +28,6 @@ class App extends Component {
         loading: false
       })
     })
-    
   }
 
   columns = [{
@@ -45,7 +44,7 @@ class App extends Component {
   handleSubmit = (description, amount, date) => {
     const item = { description, amount };
     let products = [...this.state.products];
-    products.push(item);
+    products.unshift(item);
     this.setState({ products })
     console.log('productos', this.state.products)
     axios.post('/api/insert', { description, amount, date })
@@ -63,8 +62,9 @@ class App extends Component {
           striped
           hover
           bordered={ false }
+          cellEdit={ false }
           loading={ this.state.loading }
-          overlay={ overlayFactory({ spinner: true}) }
+          //overlay={ overlayFactory({ spinner: true}) }
           noDataIndication="Table is Empty"            
         />
         <div className="container-summary">

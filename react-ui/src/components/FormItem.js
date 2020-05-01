@@ -22,20 +22,22 @@ class FormItem extends Component {
     event.preventDefault();
     const form = event.target;
     if (form.checkValidity()) {
+      console.log('mambo')
       event.preventDefault();
       event.stopPropagation();
     } else {
-      this.setState({
-        validated: true,
-      });
+        this.setState({
+          validated: true,
+        });
         return;
     }
-
+    
     this.props.onSubmit(this.state.description, this.state.amount)
     this.setState({
       description:'',
       amount:0,
     })
+    
   }
 
   render() {
@@ -49,8 +51,9 @@ class FormItem extends Component {
             type="text" name="description"
             size="sm" onChange={this.handleChange}
             value={this.state.description}
-            //required
+            required
             />
+            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Col>
         </Form.Group>
         <Form.Row>
@@ -58,9 +61,10 @@ class FormItem extends Component {
             <Form.Label column sm="2">Monto</Form.Label>
             <Col sm="10">
               <Form.Control 
+              placeholder="0"
               type="number" name="amount"
               size="sm" onChange={this.handleChange}
-              value={this.state.amount}
+              //value={this.state.amount}
               />
             </Col>
           </Form.Group>
