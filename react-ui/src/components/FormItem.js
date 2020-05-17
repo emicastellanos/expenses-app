@@ -7,7 +7,7 @@ class FormItem extends Component {
     super(props)
     this.state = {
       description: '',
-      amount: 0,
+      amount: "",
       validated: false,
     }
     this.handleChange = this.handleChange.bind(this);
@@ -31,56 +31,70 @@ class FormItem extends Component {
         });
         return;
     }
-    
-    this.props.onSubmit(this.state.description, this.state.amount)
+    let amount = this.state.amount.length === 0 ? 0 : this.state.amount;
+    this.props.onSubmit(this.state.description, amount)
     this.setState({
       description:'',
-      amount:0,
+      amount:"",
     })
     
   }
 
   render() {
+    var isDeleting;
+    (this.props.listToDelete !== undefined)  
+      ? isDeleting = this.props.listToDelete.length !== 0 
+      : isDeleting = false;
+    
     return (
-      <Form className="container-form" onSubmit={this.handleSubmit}
-        noValidate validated={this.state.validated}>
-        <Form.Group as={Row} controlId="descGroup">
-          <Form.Label column sm="2">Descripcion</Form.Label>
-          <Col sm="10">
-            <Form.Control
-            type="text" name="description"
-            size="sm" onChange={this.handleChange}
-            value={this.state.description}
-            required
-            />
-            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-          </Col>
-        </Form.Group>
-        <Form.Row>
-          <Form.Group as={Row} controlId="amountGroup">
-            <Form.Label column sm="2">Monto</Form.Label>
+      <>
+        <Form className="container-form" noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
+          <Form.Group as={Row} controlId="descGroup">
+            <Form.Label column sm="2">Descripcion</Form.Label>
             <Col sm="10">
-              <Form.Control 
-              placeholder="0"
-              type="number" name="amount"
+              <Form.Control
+              type="text" name="description"
               size="sm" onChange={this.handleChange}
-              //value={this.state.amount}
+              value={this.state.description}
+              required
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Col>
           </Form.Group>
-          <Form.Group as={Row} controlId="dateGroup">
-            <Form.Label column sm="2">Fecha</Form.Label>
-            <Col sm="10">
-              <Form.Control type="text" name="date" size="sm"></Form.Control>
-            </Col>
-          </Form.Group>
-        </Form.Row>
-        
-        <Button className="btn" type="submit"
-          variant="primary" size="lg" block>
-          OK
-        </Button>
-      </Form>
+          <Form.Row>
+            <Form.Group as={Row} controlId="amountGroup">
+              <Form.Label column sm="2">Monto</Form.Label>
+              <Col sm="10">
+                <Form.Control 
+                type="number" name="amount"
+                size="sm" onChange={this.handleChange}
+                value={this.state.amount}
+                placeholder={0}
+                />
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} controlId="dateGroup">
+              <Form.Label column sm="2">Fecha</Form.Label>
+              <Col sm="10">
+                <Form.Control type="text" name="date" size="sm"></Form.Control>
+              </Col>
+            </Form.Group>
+          </Form.Row>
+          {
+            isDeleting ? '' :
+            <Button className="btn" type="submit" variant="primary" size="lg" block >
+              OK
+            </Button>
+          }
+        </Form>
+        {
+          isDeleting ? 
+          <Button className="btn-danger" type="submit" variant="primary" size="lg" block onClick={this.props.onDeleteSubmit}>
+            DELETE
+          </Button>
+          :  ''
+        }
+      </>
     );
   }
 }

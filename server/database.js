@@ -22,6 +22,25 @@ class Database {
     this.db.run("INSERT INTO movements(description, amount, date) VALUES (?,?,?)",  [description, amount, date]);
   }
 
+  deleteAll (listToDelete) {
+    let listStringToDelete ='';
+    console.log("mambo",listToDelete[0], listToDelete)
+    console.log('size', listToDelete.length)
+    for (var i=0; i < listToDelete.length-1 ; i++){
+      console.log('i', i)
+      listStringToDelete = listStringToDelete.concat(listToDelete[i].id).concat(',');
+    }
+    if(listToDelete.length > 0){
+      console.log('i2')
+      listStringToDelete = listStringToDelete.concat(listToDelete[listToDelete.length-1].id)
+    }
+    
+    console.log('lista',listStringToDelete);
+    this.db.run("DELETE FROM movements where id IN (?)", listStringToDelete, function(err) {
+      console.log(err);
+    });
+  }
+
   selectAll() {
     return new Promise( (resolve,reject) => {
       const sql = "SELECT id, description, amount, date FROM movements";

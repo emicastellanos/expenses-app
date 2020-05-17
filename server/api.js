@@ -11,6 +11,12 @@ class Api {
       res.json('OK')
     })
 
+    app.post('/api/deleteAll', (req,res) => {
+      console.log('entra /api/deleteAll')
+      db.deleteAll(req.body)
+      res.json('OK')
+    })
+
     app.get('/api/getAllMovements', (req, res) => {
       console.log('entra /api/getAllMovements')
       db.selectAll()

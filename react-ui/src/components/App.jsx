@@ -12,10 +12,12 @@ class App extends Component {
 
     this.state = {
       products:[],
-      saldo: 0,
-      loading: true
+      balance: 0,
+      loading: true,
+      toDelete: []
     };
 
+    this.updateBalance = this.updateBalance.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -25,52 +27,89 @@ class App extends Component {
       console.log('mambo', response.data)
       this.setState({
         products: response.data.movs,
-        loading: false
+        loading: false,
+        toDelete:[]
       })
     })
   }
 
   columns = [{
     dataField: 'description',
-    text: 'descripcion'
+    text: 'description'
   }, {
     dataField: 'amount',
-    text: '$'
+    text: '$',
+    sort: true
   }, {
     dataField: 'date',
     text: 'fecha',
   }];
 
+  updateBalance = (products) => {
+    let balance = products.reduce( (acc, val) =>  parseFloat(acc) + parseFloat(val.amount), 0);
+    return parseFloat(balance).toFixed(2);
+  }
+
   handleSubmit = (description, amount, date) => {
     const item = { description, amount };
     let products = [...this.state.products];
     products.unshift(item);
-    this.setState({ products })
-    console.log('productos', this.state.products)
+    let balance = this.updateBalance(products);
+    this.setState({ products, balance })
+
     axios.post('/api/insert', { description, amount, date })
   }
 
+  handleDeleteSubmit = () => {
+    console.log('trying to delete..')
+    console.log("should delete", this.state.toDelete)
+    axios.post('/api/deleteAll', this.state.toDelete)
+    this.setState({
+      toDelete:[]
+    })
+    console.log('finished well')
+  }
+
+  handleSelect = (row, isSelect, rowIndex) => {
+    console.log(row, isSelect, rowIndex)
+    let deleteaux = this.state.toDelete;
+    (isSelect) ? deleteaux.push(row) : deleteaux = deleteaux.filter( item => item.id !==  row.id)
+    this.setState({
+      toDelete: deleteaux
+    })
+  }
+
+
+
   render() {
+    
     return (
       <div className="app wrapper-table">
         <BootstrapTable
           keyField='id'
           headerClasses="header-class"
-          // wrapperClasses="wrapper-table"
           data={ this.state.products }
           columns={ this.columns }
           striped
           hover
           bordered={ false }
-          cellEdit={ false }
+          // cellEdit={ true } 
           loading={ this.state.loading }
-          //overlay={ overlayFactory({ spinner: true}) }
-          noDataIndication="Table is Empty"            
+          overlay={ overlayFactory({ spinner: true}) }
+          noDataIndication="Table is Empty"
+          selectRow={{
+            mode: "checkbox",
+            clickToSelect: true,
+            clickToEdit: true,
+            onSelect: (row, isSelect, rowIndex) => this.handleSelect(row, isSelect, rowIndex),
+            style: { background: 'rgb(238, 193, 213)' }
+          }}
         />
         <div className="container-summary">
-        { `Saldo : ${this.state.saldo}`}
+        { `Balance : ${this.state.balance}`}
         </div>
-        <FormItem onSubmit={this.handleSubmit}/>
+        <FormItem onSubmit={this.handleSubmit} onDeleteSubmit={this.handleDeleteSubmit} 
+        listToDelete={this.state.toDelete} />
       </div>
     );
   }
